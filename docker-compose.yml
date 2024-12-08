@@ -1,0 +1,22 @@
+services:
+  db_anon_bot:
+    image: postgres:15
+    ports:
+      - "8894:5432"
+    environment:
+      POSTGRES_DB: "db_anon"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+    volumes:
+      - db_anon_bot_volume:/var/lib/postgresql/data
+
+  anonbot:
+    image: anon-bot:latest
+    env_file:
+      - .env
+    depends_on:
+      - db_anon_bot
+
+
+volumes:
+  db_anon_bot_volume:
